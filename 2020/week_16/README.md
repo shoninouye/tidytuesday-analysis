@@ -4,7 +4,7 @@ Tidy Tuesday: analyzing hip-hop data
 Intro
 -----
 
-This Tidy Tuesday analysis revolves around hip-hop data and song ratings by critics of the genre.
+This Tidy Tuesday analysis revolves around hip-hop data and song ratings by critics within the genre.
 
 From the [Tidy Tuesday GitHub repo and related article](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-14/readme.md):
 
