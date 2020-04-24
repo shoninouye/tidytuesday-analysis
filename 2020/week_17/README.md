@@ -296,4 +296,4 @@ plotly_violation_fines <- ggplotly(plot_violation_fines,
 # saveWidget(plotly_violation_fines, "plotly_violation_fines.html", selfcontained = F, libdir = "lib")
 ```
 
-<iframe src="plotly_violation_fines.html"></iframe>
+<iframe src="https://github.com/shoninouye/tidytuesday-analysis/blob/dev/2020/week_17/plotly_violation_fines.html"></iframe>
