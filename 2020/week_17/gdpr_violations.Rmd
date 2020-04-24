@@ -264,10 +264,11 @@ plot_violation_fines <- gdpr_violations %>%
        x = "Number of violations",
        y = "Total fines (in euros) incurred per violation") 
 
+plot_violation_fines
+
 # Create and save plotly plot
-plotly_violation_fines <- ggplotly(plot_violation_fines,
-                                   tooltip = "text",
-                                   session = "knitr")
+# plotly_violation_fines <- ggplotly(plot_violation_fines,
+#                                    tooltip = "text")
 # saveWidget(plotly_violation_fines, "plotly_violation_fines.html", selfcontained = F, libdir = "lib")
 ```
 
