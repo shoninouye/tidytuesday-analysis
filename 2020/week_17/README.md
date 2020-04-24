@@ -44,13 +44,13 @@ There are 120 countries where violations were enforced in, so let's first look a
 
 ``` r
 # Violation enforcements by country
-gdpr_violations %>% 
-  count(name) %>% 
-  mutate(name = fct_reorder(name, n)) %>% 
+gdpr_violations %>%
+  count(name) %>%
+  mutate(name = fct_reorder(name, n)) %>%
   ggplot(aes(name, n)) +
   geom_col(fill = "steelblue") +
   coord_flip() +
-  theme_minimal() + 
+  theme_minimal() +
   labs(title = "Which countries enforced the most violations?",
        x = "",
        y = "Number of violations")
@@ -65,7 +65,7 @@ We can see that Spain enforced the most violations by far, having over double th
 The provided data ranges from May of 2018 to March of 2020, with a handful of observations from January of 1970. Taking a closer look at the observations of 1970 and the source of the data, I discovered that the date for these values are actually unknown.
 
 ``` r
-gdpr_violations_clean <- gdpr_violations %>% 
+gdpr_violations_clean <- gdpr_violations %>%
   mutate(date = replace(date, date == "01/01/1970", NA))
 ```
 
@@ -73,18 +73,18 @@ After correcting the 1970 observations, we can move to plotting the number of vi
 
 ``` r
 # Violations over time
-gdpr_violations_clean %>% 
-  filter(!is.na(date)) %>% 
-  mutate(date = mdy(date)) %>% 
+gdpr_violations_clean %>%
+  filter(!is.na(date)) %>%
+  mutate(date = mdy(date)) %>%
   mutate(month = month(date),
          month_abbr = month(date, label = TRUE),
-         year = year(date)) %>% 
-  count(year, month, month_abbr) %>% 
-  ggplot(aes(month_abbr, n)) + 
-  geom_col(fill = "steelblue") + 
-  facet_grid(~year, scales = "free_x", space = "free_x") + 
+         year = year(date)) %>%
+  count(year, month, month_abbr) %>%
+  ggplot(aes(month_abbr, n)) +
+  geom_col(fill = "steelblue") +
+  facet_grid(~year, scales = "free_x", space = "free_x") +
   theme(panel.spacing.x = unit(0, "cm"),
-        axis.text.x = element_text(angle = -45, hjust = -.1, vjust = 1)) + 
+        axis.text.x = element_text(angle = -45, hjust = -.1, vjust = 1)) +
   labs(title = "How has the number of violations changed over time?",
        x = "",
        y = "Number of violations")
@@ -103,11 +103,11 @@ The next thing I wanted to look at was teh distribution of fine prices. I recall
 options(scipen=10000)
 
 # Distribution of fine prices
-gdpr_violations_clean %>% 
-  ggplot(aes(price)) + 
-  geom_histogram(fill = "steelblue", bins = 35, na.rm = TRUE) + 
-  scale_x_log10(labels = scales::dollar_format(suffix = "\u20AC", prefix = "")) + 
-  theme_minimal() + 
+gdpr_violations_clean %>%
+  ggplot(aes(price)) +
+  geom_histogram(fill = "steelblue", bins = 35, na.rm = TRUE) +
+  scale_x_log10(labels = scales::dollar_format(suffix = "\u20AC", prefix = "")) +
+  theme_minimal() +
   labs(title = "What does the distribution of fine prices look like?",
        x = "Fine price (in euros)",
        y = "Number of fines")
@@ -124,7 +124,7 @@ While inspecting the names of the violators, I noticed that there were quite a f
 ``` r
 # Rename unavailable and duplicate violators
 missing_violators <- c("Unknown", "Unknwon", "Not available", "Not disclosed", "Not known")
-gdpr_violations_rn <- gdpr_violations_clean %>% 
+gdpr_violations_rn <- gdpr_violations_clean %>%
   mutate(controller = case_when(controller %in% missing_violators ~ NA_character_,
                                 controller %in% c("Bank", "Bank (unknown)") ~ "Bank",
                                 controller %in% c("Google", "Google Inc.") ~ "Google",
@@ -145,10 +145,10 @@ Here we can see that 28 of the violators did not have a name, so we will be excl
 ``` r
 # Violators with most violated articles
 gdpr_violations_rn %>%
-  filter(!is.na(controller)) %>% 
-  count(controller) %>% 
-  mutate(controller = fct_reorder(controller, n)) %>% 
-  filter(n > 1) %>% 
+  filter(!is.na(controller)) %>%
+  count(controller) %>%
+  mutate(controller = fct_reorder(controller, n)) %>%
+  filter(n > 1) %>%
   ggplot(aes(x = controller, y = n)) +
   geom_col(fill = "steelblue") +
   coord_flip() +
@@ -168,17 +168,17 @@ While Vodafone had the largest number of violations, let's take a look at which 
 
 ``` r
 # Violators with highest fines
-gdpr_violations_rn %>% 
-  filter(!is.na(controller)) %>% 
-  group_by(controller) %>% 
+gdpr_violations_rn %>%
+  filter(!is.na(controller)) %>%
+  group_by(controller) %>%
   summarize(sum_price = sum(price),
-            nb_violations = n()) %>% 
-  mutate(controller = fct_reorder(controller, sum_price)) %>% 
+            nb_violations = n()) %>%
+  mutate(controller = fct_reorder(controller, sum_price)) %>%
   top_n(10, sum_price) %>%
   ggplot(aes(x = controller, y = sum_price, fill = factor(nb_violations))) +
   geom_col() +
   coord_flip() +
-  scale_y_continuous(labels = scales::dollar_format(suffix = "\u20AC", prefix = "")) + 
+  scale_y_continuous(labels = scales::dollar_format(suffix = "\u20AC", prefix = "")) +
   # scale_fill_hue(c=75, l=80) +
   scale_fill_brewer(palette = "Paired") +
   theme_minimal() +
@@ -198,8 +198,8 @@ Given the amount of text for the types of violations, I decided that a plot woul
 
 ``` r
 # Top types of violations
-gdpr_violations %>% 
-  count(type, sort = TRUE) %>% 
+gdpr_violations %>%
+  count(type, sort = TRUE) %>%
   top_n(9)
 ```
 
@@ -224,8 +224,8 @@ Taking a look at the data, we see that the `article_violated` column is a list o
 
 ``` r
 # View format of articles_violated
-gdpr_violations %>% 
-  select(article_violated) %>% 
+gdpr_violations %>%
+  select(article_violated) %>%
   head()
 ```
 
@@ -242,17 +242,17 @@ gdpr_violations %>%
 In order to get an accurate count of the most violated articles, we'll have to do some data cleaning beforehand.
 
 ``` r
-# Separate articles 
-gdpr_violations %>% 
-  mutate(article_violated = str_replace_all(article_violated, "Art.", "Art")) %>% 
-  separate_rows(article_violated, sep = "\\|") %>% 
-  count(article_violated) %>% 
-  mutate(article_violated = fct_reorder(article_violated, n)) %>% 
-  top_n(10) %>% 
+# Separate articles
+gdpr_violations %>%
+  mutate(article_violated = str_replace_all(article_violated, "Art.", "Art")) %>%
+  separate_rows(article_violated, sep = "\\|") %>%
+  count(article_violated) %>%
+  mutate(article_violated = fct_reorder(article_violated, n)) %>%
+  top_n(10) %>%
   ggplot(aes(x = article_violated, y = n)) +
   geom_col(fill = "steelblue") +
-  coord_flip() + 
-  theme_minimal() + 
+  coord_flip() +
+  theme_minimal() +
   labs(title = "Which articles were violated the most?",
        x = "Article",
        y = "Number of violations")
@@ -274,20 +274,20 @@ For this last question, I wanted to take a look at which violated articles and c
 
 ``` r
 # Highest fines and number of violations per article
-plot_violation_fines <- gdpr_violations %>% 
-  group_by(article_violated) %>% 
+plot_violation_fines <- gdpr_violations %>%
+  group_by(article_violated) %>%
   summarize(sum_article_price = sum(price),
-            nb_violations = n()) %>% 
-  ggplot(aes(x = nb_violations, 
+            nb_violations = n()) %>%
+  ggplot(aes(x = nb_violations,
              y = sum_article_price,
-             text = sprintf("Articles: %s<br>Number of violations: %s<br>Cummulative fine price: %s", 
-                            article_violated, nb_violations, sum_article_price))) + 
-  geom_jitter(color = "steelblue", alpha = 0.5) + 
+             text = sprintf("Articles: %s<br>Number of violations: %s<br>Cummulative fine price: %s",
+                            article_violated, nb_violations, sum_article_price))) +
+  geom_jitter(color = "steelblue", alpha = 0.5) +
   scale_y_log10(labels = scales::dollar_format(suffix = "\u20AC", prefix = "")) +
   theme_minimal() +
   labs(title = "Which article violations incurred the most fines?",
        x = "Number of violations",
-       y = "Total fines (in euros) incurred per violation") 
+       y = "Total fines (in euros) incurred per violation")
 
 plot_violation_fines
 ```
