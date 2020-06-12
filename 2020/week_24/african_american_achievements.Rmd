@@ -39,7 +39,7 @@ firsts <- tt_data$firsts
 
 ### What were the top occupations of those who have made scientific-related achievements?
 
-The first dataset we can look at is the `science` dataset, which contains patents and scientific-related achievements by African Americans. Using this, we can see the types the types of occupations that were held by these individuals to get a better sense of the fields these accomplishments resided in. Many of them had multiple occupations and a data quality issue existed, so some data cleaning is required before moving on to visulizations.
+The first dataset we can look at is the `science` dataset, which contains patents and scientific-related achievements by African Americans. Using this, we can see the types of occupations that were held by these individuals to get a better sense of the fields these accomplishments resided in. Many of them had multiple occupations and a data quality issue existed, so some data cleaning is required before moving on to visualizations.
 
 ```{r}
 # Calculate number of occupations
@@ -95,7 +95,7 @@ firsts %>%
   theme_minimal()
 ```
 
-We see the first major spike in achievements in the 1860s, which happens to be the decade in which the American Civil War and the resulting 13th, 14th, and 15th amendments to the U.S. Constitution took place. Before the noticable spike in achievements during and after the civil rights movement (1954-1968), we can see another spike in the late 1940s. This matches up with the end of World War II (1945), the aftermath of which [was arguably a major catalyst for the movement](https://www.history.com/news/did-world-war-ii-launch-the-civil-rights-movement).
+We see the first major spike in achievements in the 1860s, which happens to be the decade in which the American Civil War and the resulting 13th, 14th, and 15th amendments to the U.S. Constitution took place. Before the noticeable spike in achievements during and after the civil rights movement (1954-1968), we can see another spike in the late 1940s. This matches up with the end of World War II (1945), the aftermath of which [was arguably a major catalyst for the movement](https://www.history.com/news/did-world-war-ii-launch-the-civil-rights-movement).
 
 
 ### How does the distribution of achievement categories change over time?
@@ -119,6 +119,6 @@ firsts %>%
   theme(legend.position = "none") 
 ```
 
-It seems that achievements in the Military, Politics, and Education & Science categories saw larger spikes on and shortly after after both the Civil War and civil rights movement time periods. On the other hand, it looks as though achivements in Arts & Entertainment and Sports didn't see a significant increase until post-WWII and into the civil rights movement.
+It seems that achievements in the Military, Politics, and Education & Science categories saw larger spikes on and shortly after both the Civil War and civil rights movement time periods. On the other hand, it looks as though achievements in Arts & Entertainment and Sports didn't see a significant increase until post-WWII and into the civil rights movement.
 
 This data and these visualizations were not only chosen to recognize the valuable achievements and contributions by African Americans throughout history, but also to highlight the history and impact of race-related events over time. As we move into the future, I have faith that we will continue taking steps towards true racial equality and witness even more increases in these lists of achievements.
