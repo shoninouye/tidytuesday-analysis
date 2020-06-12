@@ -1,0 +1,86 @@
+---
+title: 'Tidy Tuesday: analyzing volcano eruptions'
+author: "Shon Inouye"
+output: rmarkdown::github_document
+always_allow_html: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This week's Tidy Tuesday data consists data on volcano eruptions. As someone who was born and raised on the island of Hawaii, this data is especially interesting to me. I recall a small period in my childhood where I was terrified that one of the volcanoes would erupt and create a lava flow that would engulf my house. While that imaginary scenario didn't happen to me, there was an eruption from the [Kilauea volcano in 2018](https://en.wikipedia.org/wiki/2018_lower_Puna_eruption) that caused approximately 2000 residents to evacuate, destroyed 700 houses, and left 24 people injured. That eruption made headlines around the world and resulted in studies that helped gain a deeper understanding of that volcano and others like it.
+
+You can take a look at this week's data and how it was collected on the [Tidy Tuesday GitHub repo](https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-04-28):
+
+## Questions
+
+* 
+* 
+
+## Analysis
+
+Let's start by loading our packages and data. 
+
+```{r message = FALSE}
+# Load packages
+library(tidytuesdayR)
+library(tidyverse)
+library(lubridate)
+
+# Load data (unable to use tt_load() this week)
+tt_data <- tt_load(2020, week = 20)
+volcano <- tt_data$volcano
+eruptions <- tt_data$eruptions
+events <- tt_data$events
+tree_rings <- tt_data$tree_rings
+sulfer <- tt_data$sulfur
+
+```
+
+###
+
+```{r}
+volcano %>% View()
+eruptions %>% View()
+events %>% View()
+# tree_rings %>% View()
+sulfer %>% View()
+```
+
+
+```{r}
+eruptions_clean <- eruptions %>% 
+  mutate(eruption_start = ymd(start_year, start_month, start_day))
+
+eruptions_clean %>%   
+  ggplot(aes(x = ))
+```
+
+
+
+
+
+
+```{r}
+events %>% 
+  ggplot(aes(x = eruption_start_year)) + 
+  geom_histogram()
+
+sulfer_eruptions <- eruptions %>% 
+  filter(start_year >= 500,
+         start_year <= 705,
+         vei > 3) 
+
+sulfer %>% 
+  ggplot(aes(x = year)) + 
+  geom_point(aes(y = neem), alpha = 0.3, color = "steelblue") + 
+  geom_point(aes(y = wdc), alpha = 0.3, color = "tomato") + 
+  geom_vline(aes(xintercept = start_year), alpha = 0.3,
+             data = sulfer_eruptions)
+```
+
