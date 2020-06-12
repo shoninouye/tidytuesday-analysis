@@ -1,0 +1,48 @@
+---
+title: 'Tidy Tuesday: analyzing Animal Crossing data'
+output: rmarkdown::github_document
+always_allow_html: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This week's Tidy Tuesday data consists data on revenue and attendance figures for theatres that are part of The Broadway League. You can take a look at the data and how it was collected on the [Tidy Tuesday GitHub repo](https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-04-28):
+
+## Questions
+
+I'm just going for a couple questions for this data:
+
+* Trend in gross sales?
+* What are the most successful Broadway shows?
+* 
+
+## Analysis
+
+Let's start by loading our packages and data. 
+
+```{r message = FALSE}
+# Load packages
+library(tidytuesdayR)
+library(tidyverse)
+
+# Load data (unable to use tt_load() this week)
+tt_data <- tt_load(2020, week = 19)
+user_reviews <- tt_data$user_reviews
+```
+
+
+### Which countries are violations most enforced in?
+
+There are 120 countries where violations were enforced in, so let's first look at what that distribution of enforcement looks like.
+
+```{r}
+user_reviews %>% View()
+
+```
+

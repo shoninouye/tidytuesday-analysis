@@ -1,0 +1,71 @@
+---
+title: 'Tidy Tuesday: analyzing Broadway theater grosses'
+output: rmarkdown::github_document
+always_allow_html: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This week's Tidy Tuesday data consists data on revenue and attendance figures for theatres that are part of The Broadway League. You can take a look at the data and how it was collected on the [Tidy Tuesday GitHub repo](https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-04-28):
+
+## Questions
+
+I'm just going for a couple questions for this data:
+
+* Trend in gross sales?
+* What are the most successful Broadway shows?
+* 
+
+## Analysis
+
+Let's start by loading our packages and data. 
+
+```{r message = FALSE}
+# Load packages
+library(tidytuesdayR)
+library(tidyverse)
+library(lubridate)
+
+# Load data (unable to use tt_load() this week)
+tt_data <- tt_load(2020, week = 18)
+broadway_grosses <- tt_data$grosses
+```
+
+
+### Which countries are violations most enforced in?
+
+There are 120 countries where violations were enforced in, so let's first look at what that distribution of enforcement looks like.
+
+```{r}
+yearly_grosses <- broadway_grosses %>% 
+  distinct(week_ending, weekly_gross_overall) %>% 
+  mutate(year = year(week_ending)) %>% 
+  group_by(year) %>% 
+  summarize(yearly_gross = sum(weekly_gross_overall))
+
+plotly_yearly_grosses <- yearly_grosses %>% 
+  filter(year < 2020) %>% 
+  ggplot(aes(x = year, y = yearly_gross)) +
+  geom_col(fill = "steelblue") + 
+  scale_y_continuous(labels = scales::dollar) +
+  theme_bw() + 
+  labs(title = "",
+       x = "Year",
+       y = "Yearly box office gross")
+
+plotly_yearly_grosses
+```
+
+```{r}
+broadway_grosses %>% 
+  mutate(year = year(week_ending)) %>% 
+  group_by(year) %>% 
+  summarize(yearly_avg_ticket_price = mean(avg_ticket_price))
+```
+
